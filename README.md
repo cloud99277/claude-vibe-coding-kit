@@ -27,7 +27,7 @@
 ```bash
 npm install -g @anthropic-ai/claude-code
 ```
-2. 获取本工具
+### 2. 获取本工具
 ```Bash
 git clone [https://github.com/cloud99277/claude-vibe-coding-kit.git](https://github.com/cloud99277/claude-vibe-coding-kit.git)
 cd claude-vibe-coding-kit
