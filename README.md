@@ -26,14 +26,16 @@
 ### 1. 安装 Claude Code (官方 CLI)
 ```bash
 npm install -g @anthropic-ai/claude-code
+```
 2. 获取本工具
-Bash
+```Bash
 git clone [https://github.com/cloud99277/claude-vibe-coding-kit.git](https://github.com/cloud99277/claude-vibe-coding-kit.git)
 cd claude-vibe-coding-kit
+```
 ⚙️ 核心源码 (Core Logic)
 如果你想了解自动化安装背后的原理，以下是 install.sh 的完整实现逻辑。
 
-Bash
+```Bash
 #!/bin/bash
 echo "🚀 开始安装 Claude Vibe Coding 增强包..."
 
@@ -130,12 +132,5 @@ fi
 rm /tmp/claude_vibe_rc
 
 echo "🎉 安装完成！请运行 'source ~/.bashrc' 使配置生效。"
+```
 
----
-
-### 💡 主要修复点说明 (供你参考)：
-
-1.  **正则修复**：原本的 `grep ... "[^"]"` 只能匹配**单个字符**，会导致提取不到 Key。我修改为了 `"[^"]*"`（匹配任意长度内容）。
-2.  **注释符号**：原本的 `定义安装路径` 前面没有 `#`，脚本执行到这行会报错。我全部加上了 `#`。
-3.  **结构补全**：原本的代码块最后缺少 `BASH_FUNC` 的结束标记和 `if` 语句的闭合，我已经全部补全。
-4.  **格式美化**：给代码加上了 `bash` 语法高亮，给功能列表加上了表格。
