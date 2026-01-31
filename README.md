@@ -32,19 +32,22 @@ npm install -g @anthropic-ai/claude-code
 git clone [https://github.com/cloud99277/claude-vibe-coding-kit.git](https://github.com/cloud99277/claude-vibe-coding-kit.git)
 cd claude-vibe-coding-kit
 ```
-⚙️ 核心源码 (Core Logic)
+### ⚙️ 核心源码 (Core Logic)
 如果你想了解自动化安装背后的原理，以下是 install.sh 的完整实现逻辑。
 
 ```Bash
 #!/bin/bash
 echo "🚀 开始安装 Claude Vibe Coding 增强包..."
 
+```
 # 定义安装路径
+```
 INSTALL_DIR="$HOME/claude_skills"
 mkdir -p "$INSTALL_DIR/models"
 mkdir -p "$INSTALL_DIR/switch_model"
-
-# --- 1. 部署路由脚本 (switch.sh) ---
+```
+# 1. 部署路由脚本 (switch.sh) ---
+```
 echo "📦 部署核心路由脚本..."
 cat << 'SWITCH_SCRIPT' > "$INSTALL_DIR/switch_model/switch.sh"
 #!/bin/bash
@@ -56,33 +59,43 @@ if [ ! -f "$CONFIG_FILE" ]; then
     echo "请先使用 'setup-new' 创建配置。"
     exit 1
 fi
-
+```
 # 提取参数 (修复了正则匹配)
+```
 API_KEY=$(grep -o '"ANTHROPIC_AUTH_TOKEN": *"[^"]*"' "$CONFIG_FILE" | cut -d'"' -f4)
 BASE_URL=$(grep -o '"ANTHROPIC_BASE_URL": *"[^"]*"' "$CONFIG_FILE" | cut -d'"' -f4)
 MODEL_ID=$(grep -o '"ANTHROPIC_MODEL": *"[^"]*"' "$CONFIG_FILE" | cut -d'"' -f4)
-
+```
 # 导出环境变量
+```
 export ANTHROPIC_API_KEY="$API_KEY"
 export ANTHROPIC_BASE_URL="$BASE_URL"
 export ANTHROPIC_MODEL="$MODEL_ID"
-
+```
 # 视觉反馈
+```
 echo "🔮 Switched to: $MODEL_NAME ($MODEL_ID)"
 SWITCH_SCRIPT
 
 chmod +x "$INSTALL_DIR/switch_model/switch.sh"
 
-# --- 2. 注入 Shell 函数到 .bashrc ---
+```
+# 2. 注入 Shell 函数到 .bashrc
+```
 echo "🔧 配置 Shell 环境..."
+```
 
 # 定义要注入的代码块
+```
 cat << 'BASH_FUNC' > /tmp/claude_vibe_rc
+```
 
 # --- 🚀 Vibe Coding Toolkit (Start) ---
 # See: [https://github.com/cloud99277/claude-vibe-coding-kit](https://github.com/cloud99277/claude-vibe-coding-kit)
 
 # [看板] 列出所有模型
+
+```
 models() {
     echo "----------------------------------------"
     echo "📜 Vibe Coding Models:"
@@ -101,8 +114,9 @@ models() {
     fi
     echo "----------------------------------------"
 }
-
+```
 # [配置] 新增模型向导
+```
 setup-new() {
     echo "🛠️  Add New Model Config"
     read -p "1. Short Name (e.g., ds): " name
@@ -123,8 +137,9 @@ JSON
 
 # --- 🚀 Vibe Coding Toolkit (End) ---
 BASH_FUNC
-
+```
 # 检查并注入
+```
 if ! grep -q "Vibe Coding Toolkit" ~/.bashrc; then
     cat /tmp/claude_vibe_rc >> ~/.bashrc
     echo "✅ 已注入配置到 .bashrc"
